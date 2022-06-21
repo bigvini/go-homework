@@ -1,32 +1,53 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strconv"
+	"strings"
+)
 
 func main() {
+	input := "1 9 3 4 -5"
 
-	arr := []int{4, 1, 4, -4, 6, 3, 8, 8}
+	var result string
+	numberInput := []int32{}
 
-	var result []int
-	var check bool
+	stroka := strings.Split(input, " ")
+	var max int32 = 0
+	var min int32 = 0
 
-	for _, valueArr := range arr {
-		if result == nil {
-			result = append(result, valueArr)
+	for _, valueInput := range stroka {
+		num, err := strconv.Atoi(valueInput)
+		if err == nil {
+			numberInput = append(numberInput, int32(num))
+		}
+	}
+
+	for _, value := range numberInput {
+		if max == 0 {
+			max = value
 		}
 
-		for _, resultValue := range result {
-			if valueArr == resultValue {
-				check = false
-				break
-
-			} else {
-				check = true
-
-			}
+		if value > max {
+			max = value
 		}
-		if check {
-			result = append(result, valueArr)
+
+		if min == 0 {
+			min = value
 		}
+		if value < min {
+			min = value
+		}
+
+	}
+
+	if max == min {
+		result = strconv.Itoa(int(max))
+	} else {
+		result = strconv.Itoa(int(max))
+		result += " "
+		result += strconv.Itoa(int(min))
+
 	}
 
 	fmt.Println(result)
