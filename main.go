@@ -2,54 +2,116 @@ package main
 
 import (
 	"fmt"
-	"strconv"
-	"strings"
 )
 
 func main() {
-	input := "1 9 3 4 -5"
 
-	var result string
-	numberInput := []int32{}
-
-	stroka := strings.Split(input, " ")
-	var max int32 = 0
-	var min int32 = 0
-
-	for _, valueInput := range stroka {
-		num, err := strconv.Atoi(valueInput)
-		if err == nil {
-			numberInput = append(numberInput, int32(num))
-		}
+	AnimalsOnFerm := []Animals{
+		Dog{weight: 25, eatPerKilo: 2},
+		Elephant{weight: 2000, eatPerKilo: 50},
+		Cow{weight: 400, eatPerKilo: 25},
+		Cat{7, 7},
 	}
 
-	for _, value := range numberInput {
-		if max == 0 {
-			max = value
-		}
+	animalEatPerMounts(AnimalsOnFerm)
 
-		if value > max {
-			max = value
-		}
+}
 
-		if min == 0 {
-			min = value
-		}
-		if value < min {
-			min = value
-		}
-
+func animalEatPerMounts(animal []Animals) {
+	foodTotal := 0
+	for _, value := range animal {
+		foodTotal += value.getEatForMonth()
+		fmt.Printf("\nThe %v eats of food per months %v kg and and weighs %v kg", value.getName(), value.getEatForMonth(), value.getWeight())
 	}
+	fmt.Printf("\nThe total amount of feed for the farm is %v kg", foodTotal)
 
-	if max == min {
-		result = strconv.Itoa(int(max))
-	} else {
-		result = strconv.Itoa(int(max))
-		result += " "
-		result += strconv.Itoa(int(min))
+}
 
-	}
+// --------------------------------------
 
-	fmt.Println(result)
+type Animals interface {
+	getterFoodPerMounts
+	getterName
+	getterWeight
+}
 
+type getterWeight interface {
+	getWeight() int
+}
+type getterFoodPerMounts interface {
+	getEatForMonth() int
+}
+type getterName interface {
+	getName() string
+}
+
+type Dog struct {
+	weight     int
+	eatPerKilo int
+}
+
+func (d Dog) getEatForMonth() int {
+	eatFor := d.weight * d.eatPerKilo
+	return eatFor
+}
+func (d Dog) getName() string {
+	return "Dog"
+}
+
+func (d Dog) getWeight() int {
+	return d.weight
+}
+
+type Cat struct {
+	weight     int
+	eatPerKilo int
+}
+
+func (d Cat) getWeight() int {
+	return d.weight
+}
+func (d Cat) getName() string {
+
+	return "Cat"
+}
+
+func (d Cat) getEatForMonth() int {
+	eatFor := d.weight * d.eatPerKilo
+	return eatFor
+}
+
+type Cow struct {
+	weight     int
+	eatPerKilo int
+}
+
+func (d Cow) getWeight() int {
+	return d.weight
+}
+func (d Cow) getName() string {
+
+	return "Cow"
+}
+
+func (d Cow) getEatForMonth() int {
+	eatFor := d.weight * d.eatPerKilo
+	return eatFor
+}
+
+type Elephant struct {
+	weight     int
+	eatPerKilo int
+}
+
+func (d Elephant) getWeight() int {
+	return d.weight
+}
+
+func (d Elephant) getEatForMonth() int {
+	eatFor := d.weight * d.eatPerKilo
+	return eatFor
+}
+func (d Elephant) getName() string {
+
+	return "Elephant"
 }
