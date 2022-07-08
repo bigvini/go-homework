@@ -1,55 +1,39 @@
 package main
 
-import (
-	"fmt"
-	"strconv"
-	"strings"
-)
+import "fmt"
 
 func main() {
-	input := "1 9 3 4 -5"
 
-	var result string
-	numberInput := []int32{}
+	a := []int{1, 2, 1, 3, 1}
+	b := []int{1, 2}
+	d := []int{}
 
-	stroka := strings.Split(input, " ")
-	var max int32 = 0
-	var min int32 = 0
+	d = ArrayDiff(a, b)
 
-	for _, valueInput := range stroka {
-		num, err := strconv.Atoi(valueInput)
-		if err == nil {
-			numberInput = append(numberInput, int32(num))
-		}
+	fmt.Println(d)
+
+}
+
+func ArrayDiff(a, b []int) []int {
+
+	aa := a
+	bb := b
+
+	for _, bValue := range bb {
+		d := deleteOneNumberSlice(aa, bValue)
+		aa = d
 	}
 
-	for _, value := range numberInput {
-		if max == 0 {
-			max = value
-		}
+	return aa
 
-		if value > max {
-			max = value
-		}
+}
 
-		if min == 0 {
-			min = value
+func deleteOneNumberSlice(list []int, num int) []int {
+	d := []int{}
+	for _, value := range list {
+		if num != value {
+			d = append(d, value)
 		}
-		if value < min {
-			min = value
-		}
-
 	}
-
-	if max == min {
-		result = strconv.Itoa(int(max))
-	} else {
-		result = strconv.Itoa(int(max))
-		result += " "
-		result += strconv.Itoa(int(min))
-
-	}
-
-	fmt.Println(result)
-
+	return d
 }
